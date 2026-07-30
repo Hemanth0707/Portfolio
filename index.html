@@ -2172,10 +2172,10 @@
       { 
         i: '&#x1F6E1;', 
         title: "AEGIS (AI Security Engineer Platform)", 
-        tags: ["Python", "AsyncIO", "Pydantic", "pytest"], 
+        tags: ["Python", "AsyncIO", "Pydantic", "Pytest", "FastAPI", "Docker", "LangChain", "OpenAI", "Anthropic", "Gemini", "Vector Database", "LLMs"], 
         desc: "An AI Operating System (codename JARVIS) built with a modular, independently-tested design. Includes core dependency injection, event systems, AI provider adapters, task orchestration, multi-tier cognitive memory, and agent workforce.", 
         gh: "https://github.com/Hemanth0707/AEGIS", 
-        status: "MVP Complete",
+        status: "In Development",
         webp: "assets/aegis_mockup.webp",
         png: "assets/aegis_mockup.png",
         isFeatured: true
@@ -2234,28 +2234,86 @@
 
     document.getElementById("pg").innerHTML = projs.map(p => {
       const featuredClass = p.isFeatured ? ' featured-card' : '';
-      const statusBadge = p.status ? `<span class="badge status-badge">${p.status}</span>` : '';
+      const statusBadge = p.isFeatured 
+        ? `<span class="badge status-badge featured-badge">🚧 IN DEVELOPMENT</span>`
+        : (p.status ? `<span class="badge status-badge">${p.status}</span>` : '');
       const canvasHtml = p.isFeatured ? `<canvas id="aegis-particles" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index: 1;"></canvas>` : '';
       
+      const flagshipLabelHtml = p.isFeatured ? `<div class="flagship-label">★ FLAGSHIP AI PROJECT</div>` : '';
+      
+      const statusPanelHtml = p.isFeatured ? `
+        <div class="status-panel-box">
+          <div class="status-panel-title">
+            <span>🚧</span> Status: Currently in Active Development
+          </div>
+          <div class="status-panel-desc">
+            AEGIS is my flagship AI Security Engineer Platform designed to become an intelligent operating system for AI-assisted software engineering, cloud automation, cybersecurity workflows, and autonomous development.
+            <br><br>
+            The architecture has been completed and development is currently in progress. The public repository will be released after the MVP reaches production quality.
+          </div>
+        </div>
+      ` : '';
+
+      const timelineHtml = p.isFeatured ? `
+        <div class="proj-footer-timeline">
+          <div class="timeline-col">
+            <span class="timeline-col-label">Started</span>
+            <span>July 2026</span>
+          </div>
+          <div class="timeline-col" style="text-align: center;">
+            <span class="timeline-col-label">Current Phase</span>
+            <span>Core Platform Development</span>
+          </div>
+          <div class="timeline-col" style="text-align: right;">
+            <span class="timeline-col-label">Expected MVP</span>
+            <span>Coming Soon</span>
+          </div>
+        </div>
+      ` : '';
+
+      const actionsHtml = p.isFeatured ? `
+        <div class="tooltip-container" style="flex: 1;">
+          <button class="btn btn-coming-soon" style="width: 100%; font-size: 13px; font-weight: 600; border-radius: 8px; padding: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: var(--text-muted); cursor: not-allowed;">
+            🚀 Coming Soon
+          </button>
+          <span class="tooltip-text">The public repository will be available after the first production release.</span>
+        </div>
+        <button onclick="openArchModal()" class="btn-outline" style="flex: 1; color: var(--accent1); border-color: var(--accent1); text-align: center; display: inline-block; font-size: 13px; font-weight: 600; padding: 10px; text-decoration: none; border-radius: 8px; background: transparent; cursor: pointer; transition: all 0.3s;">
+          📖 Architecture
+        </button>
+      ` : `
+        <a href="${p.gh}" target="_blank" class="btn-secondary" style="flex: 1; padding: 10px; text-align: center; font-size: 13px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all .3s; display: inline-block; white-space: nowrap; text-align: center;">Source Code</a>
+      `;
+
+      // Set description area style to avoid fixed height on featured card
+      const descStyle = p.isFeatured ? 'style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; display: none;"' : 'class="p-desc"';
+      
+      // AEGIS image height is larger
+      const imgHeight = p.isFeatured ? '240' : '200';
+      const imgPlaceholderStyle = p.isFeatured ? `style="position: relative; overflow: hidden; height: 240px;"` : `style="position: relative; overflow: hidden; height: 200px;"`;
+
       return `
         <div class="p-card${featuredClass}">
-          <div class="img-placeholder" style="position: relative; overflow: hidden; height: 200px;">
+          <div class="img-placeholder" ${imgPlaceholderStyle}>
             ${canvasHtml}
             <picture style="width: 100%; height: 100%; display: block;">
               <source srcset="${p.webp}" type="image/webp">
-              <img src="${p.png}" alt="${p.title}" width="380" height="200" loading="lazy" class="proj-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+              <img src="${p.png}" alt="${p.title}" width="380" height="${imgHeight}" loading="lazy" class="proj-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
             </picture>
             ${statusBadge}
           </div>
-          <div class="p-content">
-            <h3 class="p-title">${p.title}</h3>
-            <p class="p-desc">${p.desc}</p>
-            <div class="p-tags">
+          <div class="p-content" style="padding: 24px; flex: 1; display: flex; flex-direction: column;">
+            ${flagshipLabelHtml}
+            <h3 class="p-title" style="margin-top: 0;">${p.title}</h3>
+            ${statusPanelHtml}
+            <p ${descStyle}>${p.desc}</p>
+            <div class="p-tags" style="margin-bottom: 24px;">
               ${p.tags.map(t => `<span class="p-tag">${t}</span>`).join("")}
             </div>
-            <div class="p-actions horizontal">
-              <a href="${p.gh}" target="_blank" class="btn-secondary">Source Code</a>
+            <div class="p-actions horizontal" style="display: flex; gap: 12px; margin-top: auto;">
+              ${actionsHtml}
             </div>
+            ${timelineHtml}
           </div>
         </div>
       `;
@@ -2330,7 +2388,71 @@
     initCardTilt();
     initAegisParticles();
 
+    // AEGIS ARCHITECTURE POPUP HANDLERS
+    function openArchModal() {
+      const modal = document.getElementById('archModal');
+      const progress = document.getElementById('archProgressBar');
+      if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          if (progress) progress.style.width = '60%';
+        }, 100);
+      }
+    }
+
+    function closeArchModal() {
+      const modal = document.getElementById('archModal');
+      const progress = document.getElementById('archProgressBar');
+      if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+        if (progress) progress.style.width = '0%';
+      }
+    }
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('archModal');
+      if (e.target === modal) {
+        closeArchModal();
+      }
+    });
+
   </script>
+
+  <!-- AEGIS ARCHITECTURE MODAL -->
+  <div id="archModal" class="arch-modal">
+    <div class="arch-modal-content">
+      <div class="arch-modal-header">
+        <h3 class="arch-modal-title">AEGIS Architecture</h3>
+        <button class="arch-modal-close" onclick="closeArchModal()">&times;</button>
+      </div>
+      <ul class="arch-list">
+        <li class="arch-item"><span class="arch-item-dot"></span>Core Framework</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>AI Provider Layer</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Memory Engine</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Agent Framework</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Orchestrator</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Plugin System</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Voice Assistant</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Security Layer</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Event Bus</li>
+        <li class="arch-item"><span class="arch-item-dot"></span>Multi-Agent Collaboration</li>
+      </ul>
+      <div class="progress-section">
+        <div class="progress-labels">
+          <span>Current Progress</span>
+          <span>60%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div id="archProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent1); text-align: center; margin-top: 10px;">
+          Currently Building: Module 6 of 12
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
