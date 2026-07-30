@@ -4,7 +4,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Namburi Hemanth — Engineering Intelligence Into Reality</title>
+  <title>Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer</title>
+  <meta name="description" content="Portfolio of Namburi Hemanth Akhiland Kumar - AI & ML Enthusiast, Software Developer, and Computer Science Student at Lovely Professional University. Explore my projects including AEGIS, E-Governance, and FoodPulse.">
+  <meta name="keywords" content="Namburi Hemanth Akhiland Kumar, Hemanth Namburi, AI ML Developer, Software Engineer Portfolio, AEGIS JARVIS AI, Lovely Professional University, Computer Science Student">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hemanth0707.github.io/Portfolio/">
+  <meta property="og:title" content="Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer">
+  <meta property="og:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring AEGIS, an AI Security Engineer Platform.">
+  <meta property="og:image" content="https://hemanth0707.github.io/Portfolio/assets/Namburi_Hemanth_CV.pdf">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://hemanth0707.github.io/Portfolio/">
+  <meta property="twitter:title" content="Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer">
+  <meta property="twitter:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring AEGIS, an AI Security Engineer Platform.">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Namburi Hemanth Akhiland Kumar",
+      "url": "https://hemanth0707.github.io/Portfolio/",
+      "jobTitle": "AI & ML Enthusiast & Software Developer",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Lovely Professional University",
+        "sameAs": "https://www.lpu.in"
+      },
+      "sameAs": [
+        "https://github.com/Hemanth0707",
+        "https://linkedin.com/in/hemanthnamburi"
+      ]
+    }
+  </script>
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
     rel="stylesheet">
@@ -1154,6 +1189,56 @@
         display: block;
       }
     }
+
+    /* Badges & Enhancements */
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .practice-badge {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+    }
+    .status-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+    .featured-card {
+      border: 2px solid var(--accent1) !important;
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15) !important;
+    }
+    body.light .featured-card {
+      box-shadow: 0 10px 30px rgba(2, 132, 199, 0.15) !important;
+    }
+
+    /* Accessibility Focus styling */
+    .btn:focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent1);
+      outline-offset: 4px;
+    }
+
+    /* Target specific class to make typing text distinct */
+    #type-role {
+      border-right: 2px solid var(--accent1);
+      padding-right: 4px;
+      animation: blink 0.75s step-end infinite;
+    }
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: var(--accent1) }
+    }
   </style>
 </head>
 
@@ -1191,13 +1276,12 @@
         style="display:inline-block;padding:6px 16px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);border-radius:20px;font-family:'JetBrains Mono';font-size:12px;color:var(--accent1);margin-bottom:24px">
         WELCOME TO MY UNIVERSE</div>
       <h1 class="h1">Crafting Digital<br><span class="text-gradient">Masterpieces</span></h1>
-      <p class="hero-sub">I'm <strong>Namburi Hemanth</strong>, a professional AI/ML Engineering student dedicated to
-        building high-performance, intelligent, and user-centric web applications.</p>
+      <p class="hero-sub">I'm <strong>Namburi Hemanth</strong>, a passionate <span id="type-role" class="text-gradient" style="font-weight: 700;">AI & ML Enthusiast</span> dedicated to building high-performance, intelligent, and user-centric applications.</p>
       <div class="hero-buttons">
         <a href="#projects" class="btn btn-primary">View Work &#x2193;</a>
-        <button class="btn btn-outline" id="downloadBtn" style="border-width:2px;">
+        <a href="assets/Namburi_Hemanth_CV.pdf" download="Namburi_Hemanth_CV.pdf" class="btn btn-outline" id="downloadBtn" style="border-width:2px; text-decoration:none;">
           <span id="cvText">Download CV</span> <span class="d-icon" id="cvIcon">&#x2B07;</span>
-        </button>
+        </a>
       </div>
       <div class="socials">
         <a href="https://github.com/Hemanth0707" target="_blank" class="social-icon" title="GitHub">
@@ -1252,64 +1336,87 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE LIST -->
+  <!-- EXPERIENCE & EDUCATION Timeline -->
   <section id="experience" class="scroll-fade">
-    <div class="section-title">Professional Journey</div>
-    <h2 class="h2">My <span class="text-gradient">Experience</span></h2>
+    <div class="section-title">Academic & Training Journey</div>
+    <h2 class="h2">My <span class="text-gradient">Journey</span></h2>
 
     <div class="timeline-container">
+      <!-- LPU CSE -->
       <div class="timeline-item">
-        <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="timeline-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
             <path d="M6 12v5c3 3 9 3 12 0v-5" />
-          </svg></div>
+          </svg>
+        </div>
         <div class="timeline-content">
-          <span class="tl-period">Aug 2025</span>
-          <h3 class="tl-title">DevTown Hackathon</h3>
-          <div class="tl-subtitle">&#x1F3DB; Web App Development</div>
-          <p class="tl-desc">Successfully participated and built innovative web application solutions under tight
-            deadlines. Leveraged modern frontend tools to deliver high-quality UI/UX designs.</p>
+          <span class="tl-period">2023 – 2027</span>
+          <h3 class="tl-title">Lovely Professional University</h3>
+          <div class="tl-subtitle">&#x1F393; B.Tech in Computer Science and Engineering</div>
+          <p class="tl-desc">Acquiring advanced foundations in Software Engineering, Artificial Intelligence, Machine Learning, and Data Structures. Current CGPA: 6.61.</p>
         </div>
       </div>
 
+      <!-- Summer Training -->
       <div class="timeline-item">
-        <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path
-              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-          </svg></div>
+        <div class="timeline-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+          </svg>
+        </div>
         <div class="timeline-content">
           <span class="tl-period">Jun 2025 – Jul 2025</span>
           <h3 class="tl-title">DSA Summer Training</h3>
           <div class="tl-subtitle">&#x1F4BB; Lovely Professional University</div>
-          <p class="tl-desc">Hands-on Data Structures & Algorithms, interactive interfaces, real-time disease
-            identification engines, and algorithmic optimization applied to web apps.</p>
+          <p class="tl-desc">Hands-on Data Structures & Algorithms training. Designed and built an AI-powered Crop Disease Prediction System featuring interactive visualizations, weather-assisted analysis, and confidence-based predictions using HTML, CSS, and JavaScript.</p>
         </div>
       </div>
 
+      <!-- Web Development Bootcamp -->
       <div class="timeline-item">
-        <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="timeline-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-          </svg></div>
+          </svg>
+        </div>
         <div class="timeline-content">
-          <span class="tl-period">Oct 2024</span>
-          <h3 class="tl-title">AI Monthly Expense Project</h3>
-          <div class="tl-subtitle">&#x1F5A5; Project Implementation</div>
-          <p class="tl-desc">Engineered an AI-powered expense tracking dashboard utilizing HTML, CSS, JavaScript and AI
-            Logic categorization to analyze financial insights continuously.</p>
+          <span class="tl-period">Feb 2025</span>
+          <h3 class="tl-title">Web Development Bootcamp</h3>
+          <div class="tl-subtitle">&#x1F5A5; DevTown</div>
+          <p class="tl-desc">Completed a 7-day Bootcamp building a responsive clone of the Amazon homepage using HTML, CSS, and JavaScript, practicing modern design layouts.</p>
         </div>
       </div>
 
+      <!-- Narayana Junior College -->
       <div class="timeline-item">
-        <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="timeline-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          </svg></div>
+          </svg>
+        </div>
         <div class="timeline-content">
-          <span class="tl-period">Mar 2024</span>
-          <h3 class="tl-title">Crop Disease Alert Engine</h3>
-          <div class="tl-subtitle">&#x1F33E; Project Implementation</div>
-          <p class="tl-desc">Built a rapid response web application that detects crop diseases employing a DSA-powered
-            keyword matching algorithm ensuring immediate alerting features.</p>
+          <span class="tl-period">2022 – 2023</span>
+          <h3 class="tl-title">Narayana Junior College</h3>
+          <div class="tl-subtitle">&#x1F3DB; Higher Secondary Education</div>
+          <p class="tl-desc">Completed intermediate studies focusing on Mathematics, Physics, and Chemistry. Percentage achieved: 83.3%.</p>
+        </div>
+      </div>
+
+      <!-- Lotus High School -->
+      <div class="timeline-item">
+        <div class="timeline-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+          </svg>
+        </div>
+        <div class="timeline-content">
+          <span class="tl-period">2020 – 2021</span>
+          <h3 class="tl-title">Lotus High School</h3>
+          <div class="tl-subtitle">&#x1F3EB; Secondary School Matriculation</div>
+          <p class="tl-desc">Completed matriculation studies with outstanding academic performance. Percentage achieved: 99%.</p>
         </div>
       </div>
     </div>
@@ -1395,7 +1502,7 @@
         <!-- FormSubmit Integration -->
         <form action="https://formsubmit.co/hemanthnamburi07@gmail.com" method="POST">
           <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="">
+          <input type="hidden" name="_next" value="https://hemanth0707.github.io/Portfolio/">
           <div class="form-group">
             <label class="form-label">Your Name</label>
             <input type="text" name="name" class="form-input" required placeholder="John Doe">
@@ -1425,6 +1532,11 @@
   </footer>
 
   <script>
+    let scrollY = 0;
+    window.addEventListener('scroll', () => {
+      scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    }, { passive: true });
+
     // CUSTOM CURSOR LOGIC
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorRing = document.querySelector('.cursor-ring');
@@ -1736,8 +1848,19 @@
         lookTarget.lerp(worldPos, 0.05);
         camera.lookAt(lookTarget);
       } else {
-        camera.position.lerp(defaultCamPos, 0.03);
-        lookTarget.lerp(new THREE.Vector3(0, 0, 0), 0.03);
+        let currentDefaultCamPos = defaultCamPos.clone();
+        let currentLookTarget = new THREE.Vector3(0, 0, 0);
+
+        if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+          // Subtly drift camera position and angle based on page scroll
+          currentDefaultCamPos.x += Math.sin(scrollY * 0.001) * 30;
+          currentDefaultCamPos.y += scrollY * 0.15;
+          currentDefaultCamPos.z -= scrollY * 0.2;
+          currentLookTarget.y -= scrollY * 0.05;
+        }
+
+        camera.position.lerp(currentDefaultCamPos, 0.03);
+        lookTarget.lerp(currentLookTarget, 0.03);
         camera.lookAt(lookTarget);
       }
 
@@ -1771,62 +1894,332 @@
     const downloadBtn = document.getElementById('downloadBtn');
     const cvText = document.getElementById('cvText');
     const cvIcon = document.getElementById('cvIcon');
-    downloadBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      cvText.innerText = 'Downloading...';
-      cvIcon.innerHTML = '&#x1F6F0;'; // Satellite emoji indicator
-      cvIcon.classList.add('spin-anim');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        cvText.innerText = 'Downloading...';
+        cvIcon.innerHTML = '&#x1F6F0;'; // Satellite
+        cvIcon.classList.add('spin-anim');
 
-      // Simulate generation/delay for effect
-      setTimeout(() => {
-        cvText.innerText = 'Downloaded';
-        cvIcon.classList.remove('spin-anim');
-        cvIcon.innerHTML = '&#x2714;'; // Checkmark
-        downloadBtn.style.backgroundColor = "var(--accent1)";
-        downloadBtn.style.color = "#fff";
-
-        // Redirect to Google Drive link
-        window.open("https://drive.google.com/file/d/1fonRBe5ydVSGdO9S06aHqGepDdI8U-QF/view?usp=sharing", "_blank");
-
-        // Revert back after 3 seconds
+        // Simulate download delay for premium feel
         setTimeout(() => {
-          cvText.innerText = 'Download CV';
-          cvIcon.innerHTML = '&#x2B07;'; // Down arrow
-          downloadBtn.style.backgroundColor = "";
-          downloadBtn.style.color = "";
-          downloadBtn.classList.remove('btn-primary');
-        }, 3000);
+          cvText.innerText = 'Downloaded';
+          cvIcon.classList.remove('spin-anim');
+          cvIcon.innerHTML = '&#x2714;'; // Checkmark
+          downloadBtn.style.backgroundColor = "var(--accent1)";
+          downloadBtn.style.color = "#fff";
 
-      }, 2000);
-    });
+          // Revert back after 3 seconds
+          setTimeout(() => {
+            cvText.innerText = 'Download CV';
+            cvIcon.innerHTML = '&#x2B07;'; // Down arrow
+            downloadBtn.style.backgroundColor = "";
+            downloadBtn.style.color = "";
+          }, 3000);
 
-    // SKILLS, PROJECTS, CERTIFICATES RENDER LOGIC
+        }, 1200);
+      });
+    }
+
+    // TYPING ANIMATION FOR HERO
+    const roles = ["AI & ML Enthusiast", "Software Developer", "Computer Science Student"];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 80;
+    const deleteSpeed = 40;
+    const delayBetweenRoles = 2000;
+    const typeRoleEl = document.getElementById('type-role');
+
+    function typeEffect() {
+      if (!typeRoleEl) return;
+      const currentRole = roles[roleIndex];
+      if (isDeleting) {
+        typeRoleEl.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typeRoleEl.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === currentRole.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, delayBetweenRoles);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        setTimeout(typeEffect, 400);
+      } else {
+        setTimeout(typeEffect, isDeleting ? deleteSpeed : typeSpeed);
+      }
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      typeEffect();
+    } else if (typeRoleEl) {
+      typeRoleEl.textContent = roles[0];
+    }
+
+    // PROJECT CARD 3D TILT-ON-HOVER
+    function initCardTilt() {
+      if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+      const cards = document.querySelectorAll('.p-card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const xc = rect.width / 2;
+          const yc = rect.height / 2;
+          // Rotate up to 8 degrees based on cursor offset
+          const angleX = -(yc - y) / 20;
+          const angleY = (xc - x) / 20;
+          card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-8px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+
+    // PARTICLE FIELD ON FEATURED AEGIS CARD
+    function initAegisParticles() {
+      const canvas = document.getElementById('aegis-particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = canvas.offsetWidth;
+      let height = canvas.height = canvas.offsetHeight;
+
+      const particles = [];
+      const count = 25;
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 2 + 0.5,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: -Math.random() * 0.6 - 0.2,
+          alpha: Math.random() * 0.6 + 0.2
+        });
+      }
+
+      function draw() {
+        if (!canvas) return;
+        ctx.clearRect(0, 0, width, height);
+        
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(6, 182, 212, ${p.alpha})`;
+          ctx.fill();
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Recycle particles to bottom
+          if (p.y < 0) {
+            p.y = height;
+            p.x = Math.random() * width;
+          }
+          if (p.x < 0 || p.x > width) {
+            p.vx *= -1;
+          }
+        });
+
+        if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+          requestAnimationFrame(draw);
+        } else {
+          // Draw static fallback once
+          ctx.clearRect(0, 0, width, height);
+          particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(6, 182, 212, ${p.alpha})`;
+            ctx.fill();
+          });
+        }
+      }
+      
+      // Handle canvas resizing
+      const resizeObserver = new ResizeObserver(() => {
+        if (canvas) {
+          width = canvas.width = canvas.offsetWidth;
+          height = canvas.height = canvas.offsetHeight;
+          if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+            draw();
+          }
+        }
+      });
+      resizeObserver.observe(canvas);
+      
+      draw();
+    }
+
+    // SKILLS, PROJECTS, CERTIFICATES DATA & RENDER
     const skills = [
-      { n: 'Python', c: 'Backend' }, { n: 'C++', c: 'DSA' }, { n: 'JavaScript', c: 'Frontend' },
-      { n: 'HTML5', c: 'Frontend' }, { n: 'CSS3', c: 'Design' }, { n: 'Scikit-learn', c: 'AI/ML' },
-      { n: 'NumPy', c: 'Data' }, { n: 'Pandas', c: 'Data' }, { n: 'SQL', c: 'Database' },
-      { n: 'Generative AI', c: 'AI/ML' }, { n: 'Git', c: 'Tools' }, { n: 'Java', c: 'Backend' }
+      // Programming Languages
+      { n: 'C++', c: 'Programming Languages', i: '&#x1F4BB;' },
+      { n: 'Python', c: 'Programming Languages', i: '&#x1F40D;' },
+      { n: 'Java', c: 'Programming Languages', i: '&#x2615;' },
+      { n: 'JavaScript', c: 'Programming Languages', i: '&#x1F4D2;' },
+      { n: 'SQL', c: 'Programming Languages', i: '&#x1F4DD;' },
+      
+      // AI & Machine Learning
+      { n: 'Scikit-learn', c: 'AI & Machine Learning', i: '&#x1F9E0;' },
+      { n: 'Generative AI', c: 'AI & Machine Learning', i: '&#x1F916;' },
+      
+      // Data Science
+      { n: 'NumPy', c: 'Data Science', i: '&#x1F522;' },
+      { n: 'Pandas', c: 'Data Science', i: '&#x1F43C;' },
+      
+      // Web Development
+      { n: 'HTML', c: 'Web Development', i: '&#x1F310;' },
+      { n: 'CSS', c: 'Web Development', i: '&#x1F3A8;' },
+      { n: 'React.js', c: 'Web Development', i: '&#x269B;' },
+      { n: 'Node.js', c: 'Web Development', i: '&#x1F33F;' },
+      { n: 'Express.js', c: 'Web Development', i: '&#x1F680;' },
+      
+      // Databases
+      { n: 'MySQL', c: 'Databases', i: '&#x1F4C7;' },
+      { n: 'MongoDB', c: 'Databases', i: '&#x1F343;' },
+      
+      // Cloud & DevOps
+      { n: 'Git', c: 'Cloud & DevOps', i: '&#x1F517;' },
+      { n: 'Linux', c: 'Cloud & DevOps', i: '&#x1F427;' },
+      { n: 'Oracle Cloud', c: 'Cloud & DevOps', i: '&#x2601;' },
+      
+      // Tools & Technologies
+      { n: 'GitHub', c: 'Tools & Technologies', i: '&#x1F4D7;' },
+      { n: 'Streamlit', c: 'Tools & Technologies', i: '&#x1F4C8;' },
+      { n: 'Pydantic', c: 'Tools & Technologies', i: '&#x2705;' },
+      { n: 'AsyncIO', c: 'Tools & Technologies', i: '&#x23F1;' },
+      
+      // Core Concepts
+      { n: 'DSA', c: 'Core Concepts', i: '&#x1F9E0;' },
+      { n: 'OOP', c: 'Core Concepts', i: '&#x1F4BE;' },
+      { n: 'DBMS', c: 'Core Concepts', i: '&#x1F5C3;' },
+      { n: 'REST APIs', c: 'Core Concepts', i: '&#x1F517;' },
+      
+      // Soft Skills
+      { n: 'Cognitive Agility', c: 'Soft Skills', i: '&#x1F9E0;' },
+      { n: 'Solution-Oriented', c: 'Soft Skills', i: '&#x1F4AC;' },
+      { n: 'Execution Focus', c: 'Soft Skills', i: '&#x26A1;' },
+      { n: 'Learning Adaptability', c: 'Soft Skills', i: '&#x1F4D6;' },
+      { n: 'Ownership Mentality', c: 'Soft Skills', i: '&#x1F91D;' }
     ];
-    const createSkillPill = (s) => `<div class='skill-pill'><div class='skill-icon'>&#x26A1;</div><div><div class='skill-name'>${s.n}</div><div class='skill-cat'>${s.c} TECHNOLOGY</div></div></div>`;
-    const s1 = [...skills.slice(0, 6), ...skills.slice(0, 6), ...skills.slice(0, 6), ...skills.slice(0, 6)];
-    const s2 = [...skills.slice(6, 12), ...skills.slice(6, 12), ...skills.slice(6, 12), ...skills.slice(6, 12)];
+
+    const createSkillPill = (s) => `<div class='skill-pill'><div class='skill-icon'>${s.i || '&#x26A1;'}</div><div><div class='skill-name'>${s.n}</div><div class='skill-cat'>${s.c}</div></div></div>`;
+    
+    const midPoint = Math.ceil(skills.length / 2);
+    const firstHalf = skills.slice(0, midPoint);
+    const secondHalf = skills.slice(midPoint);
+
+    const s1 = [...firstHalf, ...firstHalf, ...firstHalf, ...firstHalf];
+    const s2 = [...secondHalf, ...secondHalf, ...secondHalf, ...secondHalf];
     document.getElementById('mq1').innerHTML = s1.map(createSkillPill).join("");
     document.getElementById('mq2').innerHTML = s2.map(createSkillPill).join("");
 
     const projs = [
-      { i: '&#x1F4B0;', title: "AI Monthly Expense Calculator", tags: ["HTML", "CSS", "JavaScript", "AI Logic"], desc: "Smart web expense tracker with AI-powered categorization and financial insight dashboard.", gh: "https://github.com/Hemanth0707/AI-Monthly-Expense-Calculator" },
-      { i: '&#x1F33E;', title: "Crop Disease Alert System", tags: ["HTML", "CSS", "JavaScript", "DSA"], desc: "Detects crop diseases from multi-factor inputs using a DSA-powered keyword matching engine.", gh: "https://github.com/Hemanth0707/Predictive-Crop-Disease-Alert-System" },
-      { i: '&#x1F4C8;', title: "Portfolio Gen-Algo Optimization", tags: ["Python", "AI", "Genetic Algo"], desc: "Optimizes financial portfolio asset allocation using Genetic Algorithms with Sharpe Ratio fitness.", gh: "https://github.com/Hemanth0707/Portfolio-optimisation-using-Genetic-algorithm" }
+      { 
+        i: '&#x1F6E1;', 
+        title: "AEGIS (AI Security Engineer Platform)", 
+        tags: ["Python", "AsyncIO", "Pydantic", "pytest"], 
+        desc: "An AI Operating System (codename JARVIS) built with a modular, independently-tested design. Includes core dependency injection, event systems, AI provider adapters, task orchestration, multi-tier cognitive memory, and agent workforce.", 
+        gh: "https://github.com/Hemanth0707/AEGIS", 
+        status: "MVP Complete",
+        isFeatured: true
+      },
+      { 
+        i: '&#x1F4AC;', 
+        title: "AI Grievance Auto-Response System", 
+        tags: ["Python", "Streamlit", "Pydantic", "AsyncIO", "NLP"], 
+        desc: "Architected an AI-powered grievance management platform that classifies citizen complaints and generates contextual automated responses through an interactive web interface. Integrated AsyncIO and Pydantic.", 
+        gh: "https://github.com/Hemanth0707/AI-Powered-E-Governance-Grievance-Classification-Auto-Response-System" 
+      },
+      { 
+        i: '&#x1F355;', 
+        title: "FoodPulse — Online Ordering Website", 
+        tags: ["React.js", "Node.js", "Express.js", "MongoDB", "JavaScript"], 
+        desc: "Crafted a full-stack food ordering platform enabling users to browse menus, explore categories, manage carts, and place orders through an intuitive responsive interface. Built with REST APIs.", 
+        gh: "https://github.com/Hemanth0707/FoodPluse" 
+      },
+      { 
+        i: '&#x1F33E;', 
+        title: "Predictive Crop Disease Alert System", 
+        tags: ["HTML", "CSS", "JavaScript", "DSA"], 
+        desc: "Detects crop diseases from multi-factor inputs using a DSA-powered keyword matching engine. Developed during LPU Summer Training.", 
+        gh: "https://github.com/Hemanth0707/Predictive-Crop-Disease-Alert-System" 
+      },
+      { 
+        i: '&#x1F9E9;', 
+        title: "AI Sliding Puzzle", 
+        tags: ["Python", "Pygame", "Algorithms"], 
+        desc: "A personal practice project implementing search algorithms to solve sliding tile puzzles with interactive visual representations.", 
+        gh: "https://github.com/Hemanth0707/AI-Sliding-Puzzle",
+        isPractice: true
+      },
+      { 
+        i: '&#x1F6D2;', 
+        title: "Fkart MERN Application", 
+        tags: ["React.js", "Node.js", "Express.js", "MongoDB"], 
+        desc: "A practice full-stack e-commerce web application featuring user authentication, product catalog, and basic cart functionalities.", 
+        gh: "https://github.com/Hemanth0707/Fkart-MERN-Application",
+        isPractice: true
+      },
+      { 
+        i: '&#x1F4B0;', 
+        title: "Expense Calculator", 
+        tags: ["HTML", "CSS", "JavaScript"], 
+        desc: "Smart web expense tracker featuring categorization and a financial dashboard for insights. A personal practice project.", 
+        gh: "https://github.com/Hemanth0707/AI-Monthly-Expense-Calculator",
+        isPractice: true
+      },
+      { 
+        i: '&#x1F4C8;', 
+        title: "Portfolio Optimization using GA", 
+        tags: ["Python", "Genetic Algo", "NumPy", "Pandas"], 
+        desc: "Engineered a Genetic Algorithm-based portfolio optimization system to identify optimal asset allocations by balancing expected returns and investment risk.", 
+        gh: "https://github.com/Hemanth0707/Portfolio-optimisation-using-Genetic-algorithm" 
+      }
     ];
-    document.getElementById("pg").innerHTML = projs.map(p => `<div class="p-card"><div class="img-placeholder"><div class="img-icon">${p.i}</div></div><div class="p-content"><h3 class="p-title">${p.title}</h3><p class="p-desc">${p.desc}</p><div class="p-tags">${p.tags.map(t => `<span class="p-tag">${t}</span>`).join("")}</div><div class="p-actions horizontal"><a href="${p.gh}" target="_blank" class="btn-secondary">Source Code</a></div></div></div>`).join("");
+
+    document.getElementById("pg").innerHTML = projs.map(p => {
+      const featuredClass = p.isFeatured ? ' featured-card' : '';
+      const practiceBadge = p.isPractice ? `<span class="badge practice-badge">Practice</span>` : '';
+      const statusBadge = p.status ? `<span class="badge status-badge">${p.status}</span>` : '';
+      const canvasHtml = p.isFeatured ? `<canvas id="aegis-particles" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index: 1;"></canvas>` : '';
+      
+      return `
+        <div class="p-card${featuredClass}">
+          <div class="img-placeholder" style="position: relative;">
+            ${canvasHtml}
+            <div class="img-icon" style="position: relative; z-index: 2;">${p.i}</div>
+            ${statusBadge || practiceBadge}
+          </div>
+          <div class="p-content">
+            <h3 class="p-title">${p.title}</h3>
+            <p class="p-desc">${p.desc}</p>
+            <div class="p-tags">
+              ${p.tags.map(t => `<span class="p-tag">${t}</span>`).join("")}
+            </div>
+            <div class="p-actions horizontal">
+              <a href="${p.gh}" target="_blank" class="btn-secondary">Source Code</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
 
     const certs = [
-      { i: '&#x1F393;', title: "DSA Summer Training | LPU", tags: ["HTML", "CSS", "DSA"], desc: "Building real-time disease identification systems using data structures and algorithms.", url: "https://drive.google.com/file/d/1BAMejrUGXJWLNUwVO0oyGLJ1102HVerh/view?usp=sharing" },
+      { i: '&#x2601;', title: "OCI AI Foundations | Oracle", tags: ["Cloud", "AI"], desc: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate verification.", url: "https://drive.google.com/file/d/1fonRBe5ydVSGdO9S06aHqGepDdI8U-QF/view?usp=sharing" },
       { i: '&#x1F4BE;', title: "SQL (Basic) | HackerRank", tags: ["SQL", "Database"], desc: "HackerRank verified basic SQL proficiency, covering queries, filtering, and joining tables.", url: "https://drive.google.com/file/d/1zhjTCNkdjstF8XtviNuZp0WhGcLb6LLi/view?usp=sharing" },
       { i: '&#x1F9E0;', title: "Master Generative AI | Udemy", tags: ["AI", "Gen AI"], desc: "Comprehensive course on Generative AI concepts and practical productivity tools mastery.", url: "https://drive.google.com/file/d/1n0N7fOtauF512O-jZZ1sYd_EX1f4CE7o/view?usp=sharing" },
       { i: '&#x1F916;', title: "ChatGPT AI Essentials", tags: ["AI", "ChatGPT"], desc: "Foundational techniques for prompt engineering resulting in improved operational efficiency.", url: "https://drive.google.com/file/d/1H1OpWi3JBxFbSHhdQplbK4FchcL9PFJ5/view?usp=sharing" }
     ];
     document.getElementById("cg").innerHTML = certs.map(p => `<div class="p-card" style="border-color: rgba(139, 92, 246, 0.15)"><div class="img-placeholder" style="background: linear-gradient(135deg,rgba(139,92,246,0.1),rgba(6,182,212,0.1))"><div class="img-icon">${p.i}</div></div><div class="p-content"><h3 class="p-title">${p.title}</h3><p class="p-desc">${p.desc}</p><div class="p-tags">${p.tags.map(t => `<span class="p-tag" style="color:var(--accent2); border-color:var(--accent2)">${t}</span>`).join("")}</div><div class="p-actions horizontal"><a href="${p.url}" target="_blank" class="btn-outline" style="color:var(--accent2); border-color:var(--accent2)">View Credential</a></div></div></div>`).join("");
+
+    // INITIALIZE ENHANCEMENTS
+    initCardTilt();
+    initAegisParticles();
 
   </script>
 </body>
