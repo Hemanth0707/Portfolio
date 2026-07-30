@@ -132,10 +132,12 @@
       background: var(--accent1);
       border-radius: 50%;
       position: fixed;
+      top: 0;
+      left: 0;
       pointer-events: none;
       z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s;
+      transform: translate3d(0, 0, 0) translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, background 0.5s ease;
       box-shadow: 0 0 10px var(--accent1);
     }
 
@@ -145,10 +147,12 @@
       border: 2px solid var(--accent2);
       border-radius: 50%;
       position: fixed;
+      top: 0;
+      left: 0;
       pointer-events: none;
       z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: all 0.1s ease-out;
+      transform: translate3d(0, 0, 0) translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.5s ease;
       box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
     }
 
@@ -162,13 +166,19 @@
       box-shadow: 0 0 15px rgba(2, 132, 199, 0.3);
     }
 
-    a:hover~.cursor-dot,
-    button:hover~.cursor-dot,
-    .timeline-item:hover~.cursor-dot,
-    .p-card:hover~.cursor-dot {
-      width: 40px;
-      height: 40px;
-      background: rgba(6, 182, 212, 0.2);
+    /* JavaScript-triggered Hover scaling states */
+    .cursor-dot.hover {
+      width: 36px;
+      height: 36px;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid var(--accent1);
+    }
+    
+    .cursor-ring.hover {
+      width: 56px;
+      height: 56px;
+      border-color: var(--accent1);
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
     }
 
     /* NAV & INTRO */
@@ -359,7 +369,7 @@
 
     /* LAYOUT & TYPOGRAPHY */
     section {
-      padding: 120px clamp(20px, 5%, 90px) 40px;
+      padding: 85px clamp(20px, 5%, 90px) 30px;
       position: relative;
       z-index: 1
     }
@@ -389,7 +399,7 @@
       font-size: clamp(32px, 5vw, 48px);
       font-weight: 800;
       letter-spacing: -1px;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
       text-align: center
     }
 
@@ -861,14 +871,13 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       overflow: hidden;
-      transition: all .4s;
+      transition: border-color .4s, box-shadow .4s, background-color .4s;
       display: flex;
       flex-direction: column
     }
 
     .p-card:hover {
       border-color: var(--accent1);
-      transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.2)
     }
 
@@ -928,7 +937,12 @@
       color: var(--text-muted);
       line-height: 1.6;
       margin-bottom: 20px;
-      flex: 1
+      height: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
     }
 
     .p-tags {
@@ -1537,16 +1551,52 @@
       scrollY = window.pageYOffset || document.documentElement.scrollTop;
     }, { passive: true });
 
-    // CUSTOM CURSOR LOGIC
+    // CUSTOM CURSOR LOGIC (GPU ACCELERATED requestAnimationFrame LOOP)
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorRing = document.querySelector('.cursor-ring');
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let dotX = 0;
+    let dotY = 0;
+    let ringX = 0;
+    let ringY = 0;
+    
     window.addEventListener('mousemove', (e) => {
-      cursorDot.style.left = e.clientX + 'px';
-      cursorDot.style.top = e.clientY + 'px';
-      setTimeout(() => {
-        cursorRing.style.left = e.clientX + 'px';
-        cursorRing.style.top = e.clientY + 'px';
-      }, 50);
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function updateCursorPosition() {
+      // Smooth interpolation (lerp)
+      dotX += (mouseX - dotX) * 0.4;
+      dotY += (mouseY - dotY) * 0.4;
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+
+      if (cursorDot) {
+        cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+      }
+      if (cursorRing) {
+        cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      }
+
+      requestAnimationFrame(updateCursorPosition);
+    }
+    requestAnimationFrame(updateCursorPosition);
+
+    // Event Delegation for Hover scale/states
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .p-card, .timeline-item, .theme-btn, .social-icon')) {
+        if (cursorDot) cursorDot.classList.add('hover');
+        if (cursorRing) cursorRing.classList.add('hover');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .p-card, .timeline-item, .theme-btn, .social-icon')) {
+        if (cursorDot) cursorDot.classList.remove('hover');
+        if (cursorRing) cursorRing.classList.remove('hover');
+      }
     });
 
     // REALISTIC THREE.JS SOLAR SYSTEM LOGIC
@@ -2126,6 +2176,8 @@
         desc: "An AI Operating System (codename JARVIS) built with a modular, independently-tested design. Includes core dependency injection, event systems, AI provider adapters, task orchestration, multi-tier cognitive memory, and agent workforce.", 
         gh: "https://github.com/Hemanth0707/AEGIS", 
         status: "MVP Complete",
+        webp: "assets/aegis_mockup.webp",
+        png: "assets/aegis_mockup.png",
         isFeatured: true
       },
       { 
@@ -2133,67 +2185,67 @@
         title: "AI Grievance Auto-Response System", 
         tags: ["Python", "Streamlit", "Pydantic", "AsyncIO", "NLP"], 
         desc: "Architected an AI-powered grievance management platform that classifies citizen complaints and generates contextual automated responses through an interactive web interface. Integrated AsyncIO and Pydantic.", 
-        gh: "https://github.com/Hemanth0707/AI-Powered-E-Governance-Grievance-Classification-Auto-Response-System" 
+        gh: "https://github.com/Hemanth0707/customer-autoresponse-egov",
+        status: "Completed",
+        webp: "assets/egov_mockup.webp",
+        png: "assets/egov_mockup.png"
       },
       { 
         i: '&#x1F355;', 
-        title: "FoodPulse — Online Ordering Website", 
+        title: "FoodPulse — Online Food Ordering Website", 
         tags: ["React.js", "Node.js", "Express.js", "MongoDB", "JavaScript"], 
         desc: "Crafted a full-stack food ordering platform enabling users to browse menus, explore categories, manage carts, and place orders through an intuitive responsive interface. Built with REST APIs.", 
-        gh: "https://github.com/Hemanth0707/FoodPluse" 
+        gh: "https://github.com/Hemanth0707/FoodPluse",
+        status: "Completed",
+        webp: "assets/foodpulse_mockup.webp",
+        png: "assets/foodpulse_mockup.png"
       },
       { 
         i: '&#x1F33E;', 
         title: "Predictive Crop Disease Alert System", 
         tags: ["HTML", "CSS", "JavaScript", "DSA"], 
         desc: "Detects crop diseases from multi-factor inputs using a DSA-powered keyword matching engine. Developed during LPU Summer Training.", 
-        gh: "https://github.com/Hemanth0707/Predictive-Crop-Disease-Alert-System" 
-      },
-      { 
-        i: '&#x1F9E9;', 
-        title: "AI Sliding Puzzle", 
-        tags: ["Python", "Pygame", "Algorithms"], 
-        desc: "A personal practice project implementing search algorithms to solve sliding tile puzzles with interactive visual representations.", 
-        gh: "https://github.com/Hemanth0707/AI-Sliding-Puzzle",
-        isPractice: true
-      },
-      { 
-        i: '&#x1F6D2;', 
-        title: "Fkart MERN Application", 
-        tags: ["React.js", "Node.js", "Express.js", "MongoDB"], 
-        desc: "A practice full-stack e-commerce web application featuring user authentication, product catalog, and basic cart functionalities.", 
-        gh: "https://github.com/Hemanth0707/Fkart-MERN-Application",
-        isPractice: true
+        gh: "https://github.com/Hemanth0707/Predictive-Crop-Disease-Alert-System",
+        status: "Completed",
+        webp: "assets/crop_mockup.webp",
+        png: "assets/crop_mockup.png"
       },
       { 
         i: '&#x1F4B0;', 
-        title: "Expense Calculator", 
+        title: "AI Monthly Expense Calculator", 
         tags: ["HTML", "CSS", "JavaScript"], 
         desc: "Smart web expense tracker featuring categorization and a financial dashboard for insights. A personal practice project.", 
         gh: "https://github.com/Hemanth0707/AI-Monthly-Expense-Calculator",
-        isPractice: true
+        status: "Completed",
+        webp: "assets/expense_mockup.webp",
+        png: "assets/expense_mockup.png"
       },
       { 
         i: '&#x1F4C8;', 
         title: "Portfolio Optimization using GA", 
         tags: ["Python", "Genetic Algo", "NumPy", "Pandas"], 
         desc: "Engineered a Genetic Algorithm-based portfolio optimization system to identify optimal asset allocations by balancing expected returns and investment risk.", 
-        gh: "https://github.com/Hemanth0707/Portfolio-optimisation-using-Genetic-algorithm" 
+        gh: "https://github.com/Hemanth0707/Portfolio-optimisation-using-Genetic-algorithm",
+        status: "Completed",
+        webp: "assets/genalgo_mockup.webp",
+        png: "assets/genalgo_mockup.png"
       }
     ];
 
     document.getElementById("pg").innerHTML = projs.map(p => {
       const featuredClass = p.isFeatured ? ' featured-card' : '';
-      const practiceBadge = p.isPractice ? `<span class="badge practice-badge">Practice</span>` : '';
       const statusBadge = p.status ? `<span class="badge status-badge">${p.status}</span>` : '';
       const canvasHtml = p.isFeatured ? `<canvas id="aegis-particles" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index: 1;"></canvas>` : '';
       
       return `
         <div class="p-card${featuredClass}">
-          <div class="img-placeholder" style="position: relative;">
+          <div class="img-placeholder" style="position: relative; overflow: hidden; height: 200px;">
             ${canvasHtml}
-            <div class="img-icon" style="position: relative; z-index: 2;">${p.i}</div>
-            ${statusBadge || practiceBadge}
+            <picture style="width: 100%; height: 100%; display: block;">
+              <source srcset="${p.webp}" type="image/webp">
+              <img src="${p.png}" alt="${p.title}" width="380" height="200" loading="lazy" class="proj-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+            </picture>
+            ${statusBadge}
           </div>
           <div class="p-content">
             <h3 class="p-title">${p.title}</h3>
@@ -2210,12 +2262,69 @@
     }).join("");
 
     const certs = [
-      { i: '&#x2601;', title: "OCI AI Foundations | Oracle", tags: ["Cloud", "AI"], desc: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate verification.", url: "https://drive.google.com/file/d/1fonRBe5ydVSGdO9S06aHqGepDdI8U-QF/view?usp=sharing" },
-      { i: '&#x1F4BE;', title: "SQL (Basic) | HackerRank", tags: ["SQL", "Database"], desc: "HackerRank verified basic SQL proficiency, covering queries, filtering, and joining tables.", url: "https://drive.google.com/file/d/1zhjTCNkdjstF8XtviNuZp0WhGcLb6LLi/view?usp=sharing" },
-      { i: '&#x1F9E0;', title: "Master Generative AI | Udemy", tags: ["AI", "Gen AI"], desc: "Comprehensive course on Generative AI concepts and practical productivity tools mastery.", url: "https://drive.google.com/file/d/1n0N7fOtauF512O-jZZ1sYd_EX1f4CE7o/view?usp=sharing" },
-      { i: '&#x1F916;', title: "ChatGPT AI Essentials", tags: ["AI", "ChatGPT"], desc: "Foundational techniques for prompt engineering resulting in improved operational efficiency.", url: "https://drive.google.com/file/d/1H1OpWi3JBxFbSHhdQplbK4FchcL9PFJ5/view?usp=sharing" }
+      { 
+        org: "Oracle",
+        i: '&#x2601;', 
+        title: "OCI AI Foundations Associate", 
+        tags: ["Cloud", "AI"], 
+        desc: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate verification.", 
+        url: "https://drive.google.com/file/d/1fonRBe5ydVSGdO9S06aHqGepDdI8U-QF/view?usp=sharing",
+        status: "CV Verified"
+      },
+      { 
+        org: "HackerRank",
+        i: '&#x1F4BE;', 
+        title: "SQL (Basic) | HackerRank", 
+        tags: ["SQL", "Database"], 
+        desc: "HackerRank verified basic SQL proficiency, covering queries, filtering, and joining tables.", 
+        url: "https://drive.google.com/file/d/1zhjTCNkdjstF8XtviNuZp0WhGcLb6LLi/view?usp=sharing",
+        status: "CV Verified"
+      },
+      { 
+        org: "Udemy",
+        i: '&#x1F9E0;', 
+        title: "Master Generative AI | Udemy", 
+        tags: ["AI", "Gen AI"], 
+        desc: "Comprehensive course on Generative AI concepts and practical productivity tools mastery.", 
+        url: "https://drive.google.com/file/d/1n0N7fOtauF512O-jZZ1sYd_EX1f4CE7o/view?usp=sharing",
+        status: "CV Verified"
+      },
+      { 
+        org: "OpenAI",
+        i: '&#x1F916;', 
+        title: "ChatGPT AI Essentials", 
+        tags: ["AI", "ChatGPT"], 
+        desc: "Foundational techniques for prompt engineering resulting in improved operational efficiency.", 
+        url: "https://drive.google.com/file/d/1H1OpWi3JBxFbSHhdQplbK4FchcL9PFJ5/view?usp=sharing",
+        status: "Practice / Non-CV"
+      }
     ];
-    document.getElementById("cg").innerHTML = certs.map(p => `<div class="p-card" style="border-color: rgba(139, 92, 246, 0.15)"><div class="img-placeholder" style="background: linear-gradient(135deg,rgba(139,92,246,0.1),rgba(6,182,212,0.1))"><div class="img-icon">${p.i}</div></div><div class="p-content"><h3 class="p-title">${p.title}</h3><p class="p-desc">${p.desc}</p><div class="p-tags">${p.tags.map(t => `<span class="p-tag" style="color:var(--accent2); border-color:var(--accent2)">${t}</span>`).join("")}</div><div class="p-actions horizontal"><a href="${p.url}" target="_blank" class="btn-outline" style="color:var(--accent2); border-color:var(--accent2)">View Credential</a></div></div></div>`).join("");
+
+    document.getElementById("cg").innerHTML = certs.map(c => {
+      const badgeClass = c.status === "CV Verified" ? "status-badge" : "practice-badge";
+      return `
+        <div class="p-card cert-card" style="border-color: rgba(139, 92, 246, 0.15); display: flex; flex-direction: column; height: 100%;">
+          <div class="img-placeholder" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(6, 182, 212, 0.08)); display: flex; align-items: center; justify-content: center; position: relative; height: 180px; overflow: hidden;">
+            <div style="text-align: center; color: var(--text-main); font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; border: 2px dashed rgba(139, 92, 246, 0.2); padding: 15px 25px; border-radius: 8px; background: rgba(0,0,0,0.3); width: 80%; max-width: 250px; position: relative; z-index: 2;">
+              <div style="font-size: 9px; text-transform: uppercase; color: var(--accent1); letter-spacing: 2px; margin-bottom: 6px;">${c.org}</div>
+              <div style="font-size: 12px; margin-bottom: 2px;">CREDENTIAL</div>
+              <div style="font-size: 18px; color: var(--accent2);">${c.i}</div>
+            </div>
+            <span class="badge ${badgeClass}">${c.status}</span>
+          </div>
+          <div class="p-content" style="padding: 20px; display: flex; flex-direction: column; flex: 1;">
+            <h3 class="p-title" style="font-size: 18px; margin-bottom: 8px;">${c.title}</h3>
+            <p class="p-desc" style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; height: 70px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">${c.desc}</p>
+            <div class="p-tags" style="margin-bottom: 16px;">
+              ${c.tags.map(t => `<span class="p-tag" style="color:var(--accent2); border-color:var(--accent2); font-size: 10px;">${t}</span>`).join("")}
+            </div>
+            <div class="p-actions horizontal" style="margin-top: auto;">
+              <a href="${c.url}" target="_blank" class="btn-outline" style="color:var(--accent2); border-color:var(--accent2); text-align: center; display: block; font-size: 12px; padding: 10px; text-decoration: none; border-radius: 6px;">View Credential</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
 
     // INITIALIZE ENHANCEMENTS
     initCardTilt();
