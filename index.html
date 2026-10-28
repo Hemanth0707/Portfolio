@@ -5,21 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer</title>
-  <meta name="description" content="Portfolio of Namburi Hemanth Akhiland Kumar - AI & ML Enthusiast, Software Developer, and Computer Science Student at Lovely Professional University. Explore my projects including AEGIS, E-Governance, and FoodPulse.">
-  <meta name="keywords" content="Namburi Hemanth Akhiland Kumar, Hemanth Namburi, AI ML Developer, Software Engineer Portfolio, AEGIS JARVIS AI, Lovely Professional University, Computer Science Student">
+  <meta name="description" content="Portfolio of Namburi Hemanth Akhiland Kumar - AI & ML Enthusiast, Software Developer, and Computer Science Student at Lovely Professional University. Explore my projects including VeriRAG, NeuroSense AI, ParkSense-AI, and E-Governance.">
+  <meta name="keywords" content="Namburi Hemanth Akhiland Kumar, Hemanth Namburi, AI ML Developer, Software Engineer Portfolio, VeriRAG, NeuroSense AI, Lovely Professional University, Computer Science Student">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://hemanth0707.github.io/Portfolio/">
   <meta property="og:title" content="Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer">
-  <meta property="og:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring AEGIS, an AI Security Engineer Platform.">
-  <meta property="og:image" content="https://hemanth0707.github.io/Portfolio/assets/Namburi_Hemanth_Akhiland_Kumar_CV.pdf">
+  <meta property="og:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring VeriRAG (RAG Hallucination Detection) and NeuroSense AI.">
+  <meta property="og:image" content="https://hemanth0707.github.io/Portfolio/assets/Hemanth_Namburi_CV.pdf">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://hemanth0707.github.io/Portfolio/">
   <meta property="twitter:title" content="Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer">
-  <meta property="twitter:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring AEGIS, an AI Security Engineer Platform.">
+  <meta property="twitter:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring VeriRAG (RAG Hallucination Detection) and NeuroSense AI.">
   
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -1336,9 +1336,12 @@
         WELCOME TO MY UNIVERSE</div>
       <h1 class="h1">Crafting Digital<br><span class="text-gradient">Masterpieces</span></h1>
       <p class="hero-sub">I'm <strong>Namburi Hemanth</strong>, a passionate <span id="type-role" class="text-gradient" style="font-weight: 700;">AI & ML Enthusiast</span> dedicated to building high-performance, intelligent, and user-centric applications.</p>
-      <div class="hero-buttons">
+      <div class="hero-buttons" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
         <a href="#projects" class="btn btn-primary">View Work &#x2193;</a>
-        <a href="assets/Namburi_Hemanth_Akhiland_Kumar_CV.pdf" download="Namburi_Hemanth_Akhiland_Kumar_CV.pdf" class="btn btn-outline" id="downloadBtn" style="border-width:2px; text-decoration:none;">
+        <button type="button" class="btn btn-outline" id="previewCvBtn" onclick="openCvModal()" style="border-width: 2px; cursor: pointer; text-decoration: none;">
+          <span>Preview CV</span> <span class="d-icon">&#x1F441;</span>
+        </button>
+        <a href="assets/Hemanth_Namburi_CV.pdf" download="Hemanth_Namburi_CV.pdf" class="btn btn-outline" id="downloadBtn" style="border-width: 2px; text-decoration: none;">
           <span id="cvText">Download CV</span> <span class="d-icon" id="cvIcon">&#x2B07;</span>
         </a>
       </div>
@@ -2077,79 +2080,6 @@
       });
     }
 
-    // PARTICLE FIELD ON FEATURED AEGIS CARD
-    function initAegisParticles() {
-      const canvas = document.getElementById('aegis-particles');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let width = canvas.width = canvas.offsetWidth;
-      let height = canvas.height = canvas.offsetHeight;
-
-      const particles = [];
-      const count = 25;
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          r: Math.random() * 2 + 0.5,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: -Math.random() * 0.6 - 0.2,
-          alpha: Math.random() * 0.6 + 0.2
-        });
-      }
-
-      function draw() {
-        if (!canvas) return;
-        ctx.clearRect(0, 0, width, height);
-        
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(6, 182, 212, ${p.alpha})`;
-          ctx.fill();
-
-          p.x += p.vx;
-          p.y += p.vy;
-
-          // Recycle particles to bottom
-          if (p.y < 0) {
-            p.y = height;
-            p.x = Math.random() * width;
-          }
-          if (p.x < 0 || p.x > width) {
-            p.vx *= -1;
-          }
-        });
-
-        if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-          requestAnimationFrame(draw);
-        } else {
-          // Draw static fallback once
-          ctx.clearRect(0, 0, width, height);
-          particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(6, 182, 212, ${p.alpha})`;
-            ctx.fill();
-          });
-        }
-      }
-      
-      // Handle canvas resizing
-      const resizeObserver = new ResizeObserver(() => {
-        if (canvas) {
-          width = canvas.width = canvas.offsetWidth;
-          height = canvas.height = canvas.offsetHeight;
-          if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-            draw();
-          }
-        }
-      });
-      resizeObserver.observe(canvas);
-      
-      draw();
-    }
-
     // SKILLS, PROJECTS, CERTIFICATES DATA & RENDER
     const skills = [
       // Programming Languages
@@ -2216,15 +2146,26 @@
 
     const projs = [
       { 
-        i: '&#x1F6E1;', 
-        title: "AEGIS (AI Security Engineer Platform)", 
-        tags: ["Python", "AsyncIO", "Pydantic", "Pytest", "FastAPI", "Docker", "LangChain", "OpenAI", "Anthropic", "Gemini", "Vector Database", "LLMs"], 
-        desc: "An AI Operating System (codename JARVIS) built with a modular, independently-tested design. Includes core dependency injection, event systems, AI provider adapters, task orchestration, multi-tier cognitive memory, and agent workforce.", 
-        gh: "https://github.com/Hemanth0707/AEGIS", 
-        status: "Building",
-        webp: "assets/aegis_mockup.webp",
-        png: "assets/aegis_mockup.png",
-        isFeatured: true
+        i: '&#x1F50D;', 
+        title: "VeriRAG — RAG Hallucination Detection & Response System", 
+        tags: ["Python", "RAG", "LLMs", "NLP", "Semantic Similarity", "Retrieval Evaluation"], 
+        desc: "An AI reliability system designed to detect potentially hallucinated or unsupported responses in Retrieval-Augmented Generation pipelines by evaluating generated answers against retrieved evidence and contextual relevance.", 
+        gh: "", 
+        status: "In Progress",
+        webp: "assets/verirag_mockup.webp",
+        png: "assets/verirag_mockup.png",
+        tooltip: "This project is currently under active development. Repository will be available upon completion."
+      },
+      { 
+        i: '&#x1F9E0;', 
+        title: "NeuroSense AI — Parkinson's Disease Detection", 
+        tags: ["Python", "Machine Learning", "Scikit-Learn", "Healthcare AI", "Pattern Recognition"], 
+        desc: "An AI-assisted diagnostic research project focused on detecting early-stage Parkinson's disease patterns using machine learning workflows. Development and architecture planning are currently in progress.", 
+        gh: "", 
+        status: "In Progress",
+        webp: "assets/neurosense_mockup.webp",
+        png: "assets/neurosense_mockup.png",
+        tooltip: "Project currently in research and development. Source repository will be published upon initial release."
       },
       { 
         i: '&#x1F697;', 
@@ -2235,7 +2176,8 @@
         gh: "", 
         status: "In Progress",
         webp: "assets/parksense_mockup.webp",
-        png: "assets/parksense_mockup.png"
+        png: "assets/parksense_mockup.png",
+        tooltip: "This project is currently under active development. Model integration in progress."
       },
       { 
         i: '&#x1F4AC;', 
@@ -2290,43 +2232,26 @@
     ];
 
     document.getElementById("pg").innerHTML = projs.map(p => {
-      const featuredClass = p.isFeatured ? ' featured-card' : '';
-      
       // Top right badge text
-      const badgeText = p.isFeatured ? '🚧 Building' : p.status;
-      const badgeClass = (p.isFeatured || p.status === 'In Progress' || p.status === 'Practice / Non-CV') ? 'practice-badge' : 'status-badge';
+      const badgeText = p.status || '';
+      const badgeClass = (p.status === 'In Progress' || p.status === 'Building' || p.status === 'Practice / Non-CV') ? 'practice-badge' : 'status-badge';
       const statusBadge = badgeText ? `<span class="badge ${badgeClass}">${badgeText}</span>` : '';
-      
-      const canvasHtml = p.isFeatured ? `<canvas id="aegis-particles" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index: 1;"></canvas>` : '';
-      
-      // Subtitle only for featured card
-      const subtitleHtml = p.isFeatured 
-        ? `<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent1); margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px;">Flagship AI Platform &bull; Public Release Coming Soon</div>` 
-        : '';
 
       // Actions button
-      const actionsHtml = p.isFeatured ? `
-        <div class="tooltip-container" style="flex: 1; width: 100%;">
-          <button class="btn btn-coming-soon" style="width: 100%; font-size: 13px; font-weight: 600; border-radius: 8px; padding: 10px; text-align: center; color: var(--text-muted); cursor: not-allowed; pointer-events: none;">
-            🚀 Coming Soon
-          </button>
-          <span class="tooltip-text">This project is currently under development. The repository will be released after the MVP is completed.</span>
-        </div>
-      ` : (p.gh ? `
+      const actionsHtml = p.gh ? `
         <a href="${p.gh}" target="_blank" class="btn-secondary" style="flex: 1; padding: 10px; text-align: center; font-size: 13px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all .3s; display: inline-block; white-space: nowrap; text-align: center;">Source Code</a>
       ` : `
         <div class="tooltip-container" style="flex: 1; width: 100%;">
           <button class="btn btn-coming-soon" style="width: 100%; font-size: 13px; font-weight: 600; border-radius: 8px; padding: 10px; text-align: center; color: var(--text-muted); cursor: not-allowed; pointer-events: none;">
             🚧 In Progress
           </button>
-          <span class="tooltip-text">This project is currently under active development. Repository will be available upon completion.</span>
+          <span class="tooltip-text">${p.tooltip || "This project is currently under active development. Repository will be available upon completion."}</span>
         </div>
-      `);
+      `;
 
       return `
-        <div class="p-card${featuredClass}">
+        <div class="p-card">
           <div class="img-placeholder" style="position: relative; overflow: hidden; height: 200px;">
-            ${canvasHtml}
             <picture style="width: 100%; height: 100%; display: block;">
               <source srcset="${p.webp}" type="image/webp">
               <img src="${p.png}" alt="${p.title}" width="380" height="200" loading="lazy" class="proj-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
@@ -2335,7 +2260,6 @@
           </div>
           <div class="p-content" style="padding: 24px; flex: 1; display: flex; flex-direction: column;">
             <h3 class="p-title" style="margin-top: 0; margin-bottom: 8px;">${p.title}</h3>
-            ${subtitleHtml}
             <p class="p-desc">${p.desc}</p>
             <div class="p-tags" style="margin-bottom: 24px; margin-top: auto;">
               ${p.tags.map(t => `<span class="p-tag">${t}</span>`).join("")}
@@ -2353,9 +2277,11 @@
         org: "Oracle",
         i: '&#x2601;', 
         title: "Oracle Agentic AI Certified Foundations Associate", 
-        tags: ["Agentic AI", "Oracle", "Autonomous AI", "GenAI"], 
-        desc: "Oracle Certified Foundations Associate in Agentic AI (Sep 2026), validating foundational expertise in autonomous AI agents and workflows.", 
-        url: "https://drive.google.com/file/d/1fonRBe5ydVSGdO9S06aHqGepDdI8U-QF/view?usp=sharing",
+        tags: ["AI", "Agentic AI", "Cloud"], 
+        desc: "Oracle Certified Foundations Associate in Agentic AI. Issued Sep 17, 2026 • Valid until Sep 17, 2028 (Validation ID: 103443743AAI26OFA).", 
+        url: "assets/Oracle_Agentic_AI_Certified_Foundations_Associate.pdf",
+        image: "assets/oracle_agentic_ai_cert.png",
+        webp: "assets/oracle_agentic_ai_cert.webp",
         status: "CV Verified"
       },
       { 
@@ -2392,11 +2318,18 @@
       return `
         <div class="p-card cert-card" style="border-color: rgba(139, 92, 246, 0.15); display: flex; flex-direction: column; height: 100%;">
           <div class="img-placeholder" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(6, 182, 212, 0.08)); display: flex; align-items: center; justify-content: center; position: relative; height: 180px; overflow: hidden;">
-            <div style="text-align: center; color: var(--text-main); font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; border: 2px dashed rgba(139, 92, 246, 0.2); padding: 15px 25px; border-radius: 8px; background: rgba(0,0,0,0.3); width: 80%; max-width: 250px; position: relative; z-index: 2;">
-              <div style="font-size: 9px; text-transform: uppercase; color: var(--accent1); letter-spacing: 2px; margin-bottom: 6px;">${c.org}</div>
-              <div style="font-size: 12px; margin-bottom: 2px;">CREDENTIAL</div>
-              <div style="font-size: 18px; color: var(--accent2);">${c.i}</div>
-            </div>
+            ${c.image ? `
+              <picture style="width: 100%; height: 100%; display: block;">
+                <source srcset="${c.webp || c.image}" type="image/webp">
+                <img src="${c.image}" alt="${c.title}" width="380" height="180" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+              </picture>
+            ` : `
+              <div style="text-align: center; color: var(--text-main); font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; border: 2px dashed rgba(139, 92, 246, 0.2); padding: 15px 25px; border-radius: 8px; background: rgba(0,0,0,0.3); width: 80%; max-width: 250px; position: relative; z-index: 2;">
+                <div style="font-size: 9px; text-transform: uppercase; color: var(--accent1); letter-spacing: 2px; margin-bottom: 6px;">${c.org}</div>
+                <div style="font-size: 12px; margin-bottom: 2px;">CREDENTIAL</div>
+                <div style="font-size: 18px; color: var(--accent2);">${c.i}</div>
+              </div>
+            `}
             <span class="badge ${badgeClass}">${c.status}</span>
           </div>
           <div class="p-content" style="padding: 20px; display: flex; flex-direction: column; flex: 1;">
@@ -2415,8 +2348,65 @@
 
     // INITIALIZE ENHANCEMENTS
     initCardTilt();
-    initAegisParticles();
 
+  </script>
+
+  <!-- CV PREVIEW MODAL -->
+  <div id="cvModal" class="cv-modal" style="display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 16px;">
+    <div class="cv-modal-box" style="position: relative; width: 100%; max-width: 960px; height: 90vh; max-height: 1000px; background: var(--bg-card, #0b1329); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 16px; box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px rgba(6,182,212,0.15); display: flex; flex-direction: column; overflow: hidden;">
+      <div class="cv-modal-header" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); gap: 12px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">📄</span>
+          <div>
+            <div style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 15px; color: var(--text-main, #fff);">Curriculum Vitae — Namburi Hemanth</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent1, #06b6d4);">Hemanth_Namburi_CV.pdf</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <a href="assets/Hemanth_Namburi_CV.pdf" target="_blank" class="btn btn-outline" style="padding: 6px 14px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <span>Open in Tab</span> <span>↗</span>
+          </a>
+          <a href="assets/Hemanth_Namburi_CV.pdf" download="Hemanth_Namburi_CV.pdf" class="btn btn-primary" style="padding: 6px 14px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <span>Download</span> <span>⬇</span>
+          </a>
+          <button type="button" onclick="closeCvModal()" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 6px;" title="Close Preview">&times;</button>
+        </div>
+      </div>
+      <div class="cv-modal-body" style="flex: 1; width: 100%; position: relative; overflow: auto; background: #111827;">
+        <iframe id="cvIframe" src="" style="width: 100%; height: 100%; border: none; display: block;" title="Curriculum Vitae Preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openCvModal() {
+      const modal = document.getElementById('cvModal');
+      const iframe = document.getElementById('cvIframe');
+      if (modal) {
+        if (iframe && (!iframe.src || iframe.src === 'about:blank' || !iframe.src.includes('Hemanth_Namburi_CV.pdf'))) {
+          iframe.src = 'assets/Hemanth_Namburi_CV.pdf#toolbar=1&navpanes=0';
+        }
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeCvModal() {
+      const modal = document.getElementById('cvModal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCvModal();
+    });
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('cvModal');
+      if (e.target === modal) closeCvModal();
+    });
   </script>
 </body>
 
