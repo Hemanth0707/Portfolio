@@ -1642,9 +1642,6 @@
       <div class="form-box">
         <!-- EmailJS Functional Contact Form -->
         <form id="contactForm" novalidate>
-          <!-- Anti-Spam Honeypot Field (Invisible to human visitors) -->
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; pointer-events: none;" aria-hidden="true">
-
           <div class="form-group">
             <label class="form-label" for="from_name">Your Name</label>
             <input type="text" id="from_name" name="from_name" class="form-input" required placeholder="John Doe" autocomplete="name">
@@ -1662,8 +1659,8 @@
             <div class="field-error-msg" id="messageError">Please enter your message (minimum 5 characters).</div>
           </div>
 
-          <!-- Status Notification (Success / Error / Warning) -->
-          <div id="formStatus" class="form-status" role="alert" aria-live="polite"></div>
+          <!-- Status Notification (Success / Error / Warning) - Hidden initially -->
+          <div id="formStatus" class="form-status" style="display: none;" role="alert" aria-live="polite"></div>
 
           <button type="submit" id="contactSubmitBtn" class="btn btn-primary" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
             <span id="btnText">Send Message &#x2192;</span>
@@ -2586,15 +2583,7 @@
         clearErrors();
         hideStatus();
 
-        // 1. Anti-Spam Honeypot Check (Silently drop bots)
-        const honeypot = contactForm.querySelector('input[name="_gotcha"]');
-        if (honeypot && honeypot.value.trim() !== '') {
-          showStatus('success', "Your message has been sent successfully! I'll get back to you soon.");
-          contactForm.reset();
-          return;
-        }
-
-        // 2. Client-side Validation
+        // 1. Client-side Validation
         const nameVal = nameInput ? nameInput.value.trim() : '';
         const emailVal = emailInput ? emailInput.value.trim() : '';
         const messageVal = messageInput ? messageInput.value.trim() : '';
@@ -2622,19 +2611,7 @@
 
         if (hasError) return;
 
-        // 3. Spam Throttling / Rate-Limiting (Prevent multiple submissions within 30s)
-        const COOLDOWN_SECONDS = 30;
-        const lastSent = localStorage.getItem('last_contact_timestamp');
-        if (lastSent) {
-          const elapsed = (Date.now() - parseInt(lastSent, 10)) / 1000;
-          if (elapsed < COOLDOWN_SECONDS) {
-            const remaining = Math.ceil(COOLDOWN_SECONDS - elapsed);
-            showStatus('warning', `Please wait ${remaining}s before sending another message.`);
-            return;
-          }
-        }
-
-        // 4. Loading State
+        // 2. Loading State & Submission Lock
         isSubmitting = true;
         if (submitBtn) {
           submitBtn.disabled = true;
@@ -2646,24 +2623,33 @@
           btnText.innerHTML = '<span class="spin-anim" style="display:inline-block; font-size:15px; margin-right:6px;">&#x21BB;</span> Sending Message...';
         }
 
-        // 5. Build Template Parameters
+        // 3. Build Template Parameters
         const templateParams = {
           from_name: nameVal,
           from_email: emailVal,
           reply_to: emailVal,
           submission_date: new Date().toLocaleString(),
-          message: messageVal
+          message: messageVal,
+          to_email: 'hemanthnamburi07@gmail.com',
+          name: nameVal,
+          email: emailVal
         };
 
-        // 6. Check if EmailJS SDK is available
+        // 4. Check if EmailJS SDK is available
         if (!window.emailjs) {
-          console.warn('EmailJS SDK not loaded.');
-          showStatus('error', "Unable to send your message right now. Please try again.");
+          console.error('[EmailJS] SDK is not loaded in window.emailjs');
+          showStatus('error', "Unable to send your message right now. Please check your connection and try again.");
           resetLoadingState();
           return;
         }
 
-        // 7. Dispatch via EmailJS SDK
+        console.log('[EmailJS] Initiating send with params:', {
+          serviceID: EMAILJS_CONFIG.SERVICE_ID,
+          templateID: EMAILJS_CONFIG.TEMPLATE_ID,
+          templateParams: templateParams
+        });
+
+        // 5. Dispatch via EmailJS SDK
         try {
           const response = await emailjs.send(
             EMAILJS_CONFIG.SERVICE_ID,
@@ -2672,16 +2658,18 @@
             EMAILJS_CONFIG.PUBLIC_KEY
           );
 
-          if (response.status === 200 || response.text === 'OK') {
+          console.log('[EmailJS] Success response received:', response);
+
+          if (response && (response.status === 200 || response.text === 'OK')) {
             showStatus('success', "Your message has been sent successfully! I'll get back to you soon.");
             contactForm.reset();
-            localStorage.setItem('last_contact_timestamp', Date.now().toString());
           } else {
-            throw new Error(`EmailJS responded with status: ${response.status} (${response.text})`);
+            throw new Error(`EmailJS responded with status: ${response ? response.status : 'Unknown'} (${response ? response.text : 'No response text'})`);
           }
         } catch (error) {
-          console.error('EmailJS Submission Error:', error);
-          showStatus('error', "Unable to send your message right now. Please try again.");
+          console.error('[EmailJS] Submission Error:', error);
+          const errorMsg = (error && (error.text || error.message)) ? String(error.text || error.message) : "Unable to send your message right now. Please try again.";
+          showStatus('error', `Unable to send your message right now. (${errorMsg})`);
           // Inputs remain intact on failure so the user does not lose their text
         } finally {
           resetLoadingState();
