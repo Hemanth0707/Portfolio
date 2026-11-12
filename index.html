@@ -44,6 +44,8 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
     rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- EmailJS Browser SDK v4 -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *,
     *::before,
@@ -1088,6 +1090,75 @@
       background: rgba(6, 182, 212, 0.05)
     }
 
+    .form-input.input-error {
+      border-color: #f87171 !important;
+      background: rgba(239, 68, 68, 0.05) !important;
+    }
+
+    .field-error-msg {
+      display: none;
+      color: #f87171;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 6px;
+    }
+
+    .field-error-msg.visible {
+      display: block;
+    }
+
+    .form-status {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .form-status.status-success {
+      display: flex;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .form-status.status-error {
+      display: flex;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+    }
+
+    .form-status.status-warning {
+      display: flex;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+    }
+
+    body.light .form-status.status-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #065f46;
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    body.light .form-status.status-error {
+      background: rgba(239, 68, 68, 0.15);
+      color: #991b1b;
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    body.light .form-status.status-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #92400e;
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
     textarea.form-input {
       min-height: 120px;
       resize: vertical
@@ -1569,24 +1640,34 @@
       </div>
 
       <div class="form-box">
-        <!-- FormSubmit Integration -->
-        <form action="https://formsubmit.co/hemanthnamburi07@gmail.com" method="POST">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://hemanth0707.github.io/Portfolio/">
+        <!-- EmailJS Functional Contact Form -->
+        <form id="contactForm" novalidate>
+          <!-- Anti-Spam Honeypot Field (Invisible to human visitors) -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; pointer-events: none;" aria-hidden="true">
+
           <div class="form-group">
-            <label class="form-label">Your Name</label>
-            <input type="text" name="name" class="form-input" required placeholder="John Doe">
+            <label class="form-label" for="from_name">Your Name</label>
+            <input type="text" id="from_name" name="from_name" class="form-input" required placeholder="John Doe" autocomplete="name">
+            <div class="field-error-msg" id="nameError">Please enter your name (minimum 2 characters).</div>
           </div>
           <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-input" required placeholder="john@example.com">
+            <label class="form-label" for="from_email">Email Address</label>
+            <input type="email" id="from_email" name="from_email" class="form-input" required placeholder="john@example.com" autocomplete="email">
+            <div class="field-error-msg" id="emailError">Please enter a valid email address.</div>
           </div>
           <div class="form-group">
-            <label class="form-label">Message</label>
-            <textarea name="message" class="form-input" required
+            <label class="form-label" for="message">Message</label>
+            <textarea id="message" name="message" class="form-input" required
               placeholder="Let's build something amazing together..."></textarea>
+            <div class="field-error-msg" id="messageError">Please enter your message (minimum 5 characters).</div>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%">Send Message &#x2192;</button>
+
+          <!-- Status Notification (Success / Error / Warning) -->
+          <div id="formStatus" class="form-status" role="alert" aria-live="polite"></div>
+
+          <button type="submit" id="contactSubmitBtn" class="btn btn-primary" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <span id="btnText">Send Message &#x2192;</span>
+          </button>
         </form>
       </div>
     </div>
@@ -2416,6 +2497,197 @@
       const modal = document.getElementById('cvModal');
       if (e.target === modal) closeCvModal();
     });
+
+    // =========================================================================
+    // EMAILJS CONFIGURATION
+    // =========================================================================
+    const EMAILJS_CONFIG = {
+      SERVICE_ID: "service_p79sf5w",
+      TEMPLATE_ID: "template_meojft3",
+      PUBLIC_KEY: "fV12nX6qKErLJGZQR"
+    };
+
+    // Initialize EmailJS Browser SDK
+    if (window.emailjs && EMAILJS_CONFIG.PUBLIC_KEY) {
+      try {
+        emailjs.init({ publicKey: EMAILJS_CONFIG.PUBLIC_KEY });
+      } catch (err) {
+        console.warn('EmailJS SDK init warning:', err);
+      }
+    }
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      const nameInput = document.getElementById('from_name');
+      const emailInput = document.getElementById('from_email');
+      const messageInput = document.getElementById('message');
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const messageError = document.getElementById('messageError');
+      const formStatus = document.getElementById('formStatus');
+      const submitBtn = document.getElementById('contactSubmitBtn');
+      const btnText = document.getElementById('btnText');
+
+      let isSubmitting = false;
+
+      function clearErrors() {
+        [nameInput, emailInput, messageInput].forEach(inp => inp && inp.classList.remove('input-error'));
+        [nameError, emailError, messageError].forEach(err => err && err.classList.remove('visible'));
+      }
+
+      function showStatus(type, message) {
+        if (!formStatus) return;
+        formStatus.className = `form-status status-${type}`;
+        
+        let icon = '&#x2714;'; // Checkmark
+        if (type === 'error') icon = '&#x26A0;'; // Warning sign
+        if (type === 'warning') icon = '&#x23F3;'; // Hourglass
+
+        formStatus.innerHTML = `<span style="font-size: 16px; flex-shrink: 0;">${icon}</span><span>${message}</span>`;
+        formStatus.style.display = 'flex';
+      }
+
+      function hideStatus() {
+        if (formStatus) {
+          formStatus.style.display = 'none';
+          formStatus.innerHTML = '';
+        }
+      }
+
+      function resetLoadingState() {
+        isSubmitting = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.cursor = 'pointer';
+        }
+        [nameInput, emailInput, messageInput].forEach(inp => inp && (inp.disabled = false));
+        if (btnText) {
+          btnText.innerHTML = 'Send Message &#x2192;';
+        }
+      }
+
+      // Clear inline errors dynamically when user types
+      [nameInput, emailInput, messageInput].forEach(input => {
+        if (input) {
+          input.addEventListener('input', () => {
+            input.classList.remove('input-error');
+            const errEl = document.getElementById(input.id === 'from_name' ? 'nameError' : (input.id === 'from_email' ? 'emailError' : 'messageError'));
+            if (errEl) errEl.classList.remove('visible');
+          });
+        }
+      });
+
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        if (isSubmitting) return;
+
+        clearErrors();
+        hideStatus();
+
+        // 1. Anti-Spam Honeypot Check (Silently drop bots)
+        const honeypot = contactForm.querySelector('input[name="_gotcha"]');
+        if (honeypot && honeypot.value.trim() !== '') {
+          showStatus('success', "Your message has been sent successfully! I'll get back to you soon.");
+          contactForm.reset();
+          return;
+        }
+
+        // 2. Client-side Validation
+        const nameVal = nameInput ? nameInput.value.trim() : '';
+        const emailVal = emailInput ? emailInput.value.trim() : '';
+        const messageVal = messageInput ? messageInput.value.trim() : '';
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let hasError = false;
+
+        if (!nameVal || nameVal.length < 2) {
+          if (nameInput) nameInput.classList.add('input-error');
+          if (nameError) nameError.classList.add('visible');
+          hasError = true;
+        }
+
+        if (!emailVal || !emailRegex.test(emailVal)) {
+          if (emailInput) emailInput.classList.add('input-error');
+          if (emailError) emailError.classList.add('visible');
+          hasError = true;
+        }
+
+        if (!messageVal || messageVal.length < 5) {
+          if (messageInput) messageInput.classList.add('input-error');
+          if (messageError) messageError.classList.add('visible');
+          hasError = true;
+        }
+
+        if (hasError) return;
+
+        // 3. Spam Throttling / Rate-Limiting (Prevent multiple submissions within 30s)
+        const COOLDOWN_SECONDS = 30;
+        const lastSent = localStorage.getItem('last_contact_timestamp');
+        if (lastSent) {
+          const elapsed = (Date.now() - parseInt(lastSent, 10)) / 1000;
+          if (elapsed < COOLDOWN_SECONDS) {
+            const remaining = Math.ceil(COOLDOWN_SECONDS - elapsed);
+            showStatus('warning', `Please wait ${remaining}s before sending another message.`);
+            return;
+          }
+        }
+
+        // 4. Loading State
+        isSubmitting = true;
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = '0.75';
+          submitBtn.style.cursor = 'not-allowed';
+        }
+        [nameInput, emailInput, messageInput].forEach(inp => inp && (inp.disabled = true));
+        if (btnText) {
+          btnText.innerHTML = '<span class="spin-anim" style="display:inline-block; font-size:15px; margin-right:6px;">&#x21BB;</span> Sending Message...';
+        }
+
+        // 5. Build Template Parameters
+        const templateParams = {
+          from_name: nameVal,
+          from_email: emailVal,
+          reply_to: emailVal,
+          submission_date: new Date().toLocaleString(),
+          message: messageVal
+        };
+
+        // 6. Check if EmailJS SDK is available
+        if (!window.emailjs) {
+          console.warn('EmailJS SDK not loaded.');
+          showStatus('error', "Unable to send your message right now. Please try again.");
+          resetLoadingState();
+          return;
+        }
+
+        // 7. Dispatch via EmailJS SDK
+        try {
+          const response = await emailjs.send(
+            EMAILJS_CONFIG.SERVICE_ID,
+            EMAILJS_CONFIG.TEMPLATE_ID,
+            templateParams,
+            EMAILJS_CONFIG.PUBLIC_KEY
+          );
+
+          if (response.status === 200 || response.text === 'OK') {
+            showStatus('success', "Your message has been sent successfully! I'll get back to you soon.");
+            contactForm.reset();
+            localStorage.setItem('last_contact_timestamp', Date.now().toString());
+          } else {
+            throw new Error(`EmailJS responded with status: ${response.status} (${response.text})`);
+          }
+        } catch (error) {
+          console.error('EmailJS Submission Error:', error);
+          showStatus('error', "Unable to send your message right now. Please try again.");
+          // Inputs remain intact on failure so the user does not lose their text
+        } finally {
+          resetLoadingState();
+        }
+      });
+    }
   </script>
 </body>
 
