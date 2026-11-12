@@ -5,21 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer</title>
-  <meta name="description" content="Portfolio of Namburi Hemanth Akhiland Kumar - AI & ML Enthusiast, Software Developer, and Computer Science Student at Lovely Professional University. Explore my projects including VeriRAG, NeuroSense AI, ParkSense-AI, and E-Governance.">
-  <meta name="keywords" content="Namburi Hemanth Akhiland Kumar, Hemanth Namburi, AI ML Developer, Software Engineer Portfolio, VeriRAG, NeuroSense AI, Lovely Professional University, Computer Science Student">
+  <meta name="description" content="Portfolio of Namburi Hemanth Akhiland Kumar - AI & ML Enthusiast, Software Developer, and Computer Science Student at Lovely Professional University. Explore my projects including VeriRAG, ParkSense-AI, and E-Governance.">
+  <meta name="keywords" content="Namburi Hemanth Akhiland Kumar, Hemanth Namburi, AI ML Developer, Software Engineer Portfolio, VeriRAG, ParkSense-AI, Lovely Professional University, Computer Science Student">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://hemanth0707.github.io/Portfolio/">
   <meta property="og:title" content="Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer">
-  <meta property="og:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring VeriRAG (RAG Hallucination Detection) and NeuroSense AI.">
+  <meta property="og:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring VeriRAG and ParkSense-AI.">
   <meta property="og:image" content="https://hemanth0707.github.io/Portfolio/assets/Hemanth_Namburi_CV.pdf">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://hemanth0707.github.io/Portfolio/">
   <meta property="twitter:title" content="Namburi Hemanth Akhiland Kumar — AI/ML Enthusiast & Software Developer">
-  <meta property="twitter:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring VeriRAG (RAG Hallucination Detection) and NeuroSense AI.">
+  <meta property="twitter:description" content="Explore my portfolio showcasing intelligent AI/ML solutions, software systems, and modern web applications. Featuring VeriRAG and ParkSense-AI.">
   
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -355,6 +355,13 @@
       background: rgba(255, 255, 255, 0.1);
       border-color: var(--accent1);
       transform: translateY(-2px)
+    }
+
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn-outline {
@@ -2157,27 +2164,15 @@
         tooltip: "This project is currently under active development. Repository will be available upon completion."
       },
       { 
-        i: '&#x1F9E0;', 
-        title: "NeuroSense AI — Parkinson's Disease Detection", 
-        tags: ["Python", "Machine Learning", "Scikit-Learn", "Healthcare AI", "Pattern Recognition"], 
-        desc: "An AI-assisted diagnostic research project focused on detecting early-stage Parkinson's disease patterns using machine learning workflows. Development and architecture planning are currently in progress.", 
-        gh: "", 
-        status: "In Progress",
-        webp: "assets/neurosense_mockup.webp",
-        png: "assets/neurosense_mockup.png",
-        tooltip: "Project currently in research and development. Source repository will be published upon initial release."
-      },
-      { 
         i: '&#x1F697;', 
         title: "ParkSense-AI", 
         category: "Computer Vision / Machine Learning",
         tags: ["Python", "PyTorch", "Torchvision", "ResNet18", "CNRPark"], 
         desc: "Built a parking-space classification model using ResNet18 transfer learning in PyTorch to classify individual parking spaces as busy or free. Trained on 12,584 CNRPark image patches using an 80:20 training-validation split, achieving 94.4% validation accuracy after the first training epoch on CPU. Extending training to five epochs and integrating the model into a parking application are in progress.", 
-        gh: "", 
-        status: "In Progress",
+        gh: "https://github.com/Hemanth0707/SmartPark-AI", 
+        status: "Completed",
         webp: "assets/parksense_mockup.webp",
-        png: "assets/parksense_mockup.png",
-        tooltip: "This project is currently under active development. Model integration in progress."
+        png: "assets/parksense_mockup.png"
       },
       { 
         i: '&#x1F4AC;', 
@@ -2238,16 +2233,30 @@
       const statusBadge = badgeText ? `<span class="badge ${badgeClass}">${badgeText}</span>` : '';
 
       // Actions button
-      const actionsHtml = p.gh ? `
-        <a href="${p.gh}" target="_blank" class="btn-secondary" style="flex: 1; padding: 10px; text-align: center; font-size: 13px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all .3s; display: inline-block; white-space: nowrap; text-align: center;">Source Code</a>
-      ` : `
-        <div class="tooltip-container" style="flex: 1; width: 100%;">
-          <button class="btn btn-coming-soon" style="width: 100%; font-size: 13px; font-weight: 600; border-radius: 8px; padding: 10px; text-align: center; color: var(--text-muted); cursor: not-allowed; pointer-events: none;">
-            🚧 In Progress
-          </button>
-          <span class="tooltip-text">${p.tooltip || "This project is currently under active development. Repository will be available upon completion."}</span>
-        </div>
-      `;
+      let actionsHtml = '';
+      if (p.gh) {
+        if (p.title && p.title.includes('ParkSense')) {
+          actionsHtml = `
+            <a href="${p.gh}" target="_blank" rel="noopener noreferrer" class="btn-secondary project-btn" style="flex: 1; padding: 10px; text-align: center; font-size: 13px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all .3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              <span>View Source Code</span>
+            </a>
+          `;
+        } else {
+          actionsHtml = `
+            <a href="${p.gh}" target="_blank" class="btn-secondary" style="flex: 1; padding: 10px; text-align: center; font-size: 13px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all .3s; display: inline-block; white-space: nowrap; text-align: center;">Source Code</a>
+          `;
+        }
+      } else {
+        actionsHtml = `
+          <div class="tooltip-container" style="flex: 1; width: 100%;">
+            <button class="btn btn-coming-soon" style="width: 100%; font-size: 13px; font-weight: 600; border-radius: 8px; padding: 10px; text-align: center; color: var(--text-muted); cursor: not-allowed; pointer-events: none;">
+              🚧 In Progress
+            </button>
+            <span class="tooltip-text">${p.tooltip || "This project is currently under active development. Repository will be available upon completion."}</span>
+          </div>
+        `;
+      }
 
       return `
         <div class="p-card">
